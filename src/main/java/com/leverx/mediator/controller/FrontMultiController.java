@@ -1,7 +1,5 @@
 package com.leverx.mediator.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.annotation.RequestScope;
 
+import com.leverx.mediator.dto.response.every.EveryListResponse;
 import com.leverx.mediator.model.auth.Auth;
 import com.leverx.mediator.service.MultiService;
 
@@ -32,7 +31,7 @@ public class FrontMultiController {
 
   @GetMapping("/all")
   @RequestScope
-  public ResponseEntity<List<Object>> getAllLists(
+  public ResponseEntity<EveryListResponse> getAllLists(
       @RequestHeader("Authorization") String authHeader) {
     log.info("Get all lists request: {}", authHeader);
 

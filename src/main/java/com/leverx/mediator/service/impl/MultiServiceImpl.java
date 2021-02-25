@@ -1,12 +1,13 @@
 package com.leverx.mediator.service.impl;
 
-import static java.util.Arrays.asList;
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.leverx.mediator.dto.request.CatRequestDto;
+import com.leverx.mediator.dto.request.DogRequestDto;
+import com.leverx.mediator.dto.request.UserRequestDto;
+import com.leverx.mediator.dto.response.every.EveryListResponse;
+import com.leverx.mediator.dto.response.every.EverySingleResponse;
 import com.leverx.mediator.repository.CatRepository;
 import com.leverx.mediator.repository.DogRepository;
 import com.leverx.mediator.repository.UserRepository;
@@ -34,12 +35,18 @@ public class MultiServiceImpl implements MultiService {
   }
 
   @Override
-  public List<Object> getAllLists() {
+  public EverySingleResponse save(CatRequestDto catRequestDto, DogRequestDto dogRequestDto, UserRequestDto userRequestDto) {
+    return null;
+  }
+
+  @Override
+  public EveryListResponse getAllLists() {
     log.info("Service. Get all lists");
 
-    return asList(
-        catRepository.getAllCats(),
-        dogRepository.getAllDogs(),
-        userRepository.getAllUsers());
+    return EveryListResponse.builder()
+        .cats(catRepository.getAll())
+        .dogs(dogRepository.getAll())
+        .users(userRepository.getAll())
+        .build();
   }
 }
