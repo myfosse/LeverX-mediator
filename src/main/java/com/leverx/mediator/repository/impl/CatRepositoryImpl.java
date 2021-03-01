@@ -1,22 +1,30 @@
 package com.leverx.mediator.repository.impl;
 
+import static java.util.Arrays.asList;
+import static java.util.Optional.ofNullable;
+
+import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
-import static com.leverx.mediator.repository.header.EntityHeaderCreation.createEntityHeader;
+import static com.leverx.mediator.repository.header.EntityHeaderCreation.createEntityHeaderWithoutBody;
+import static com.leverx.mediator.repository.header.EntityHeaderCreation.createEntityHeaderWithBody;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import com.leverx.mediator.dto.response.CatResponseDto;
+import com.leverx.mediator.dto.request.CatRequest;
+import com.leverx.mediator.dto.response.CatResponse;
 import com.leverx.mediator.model.auth.Auth;
 import com.leverx.mediator.repository.CatRepository;
-import com.leverx.mediator.repository.header.EntityHeaderCreation;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,16 +46,40 @@ public class CatRepositoryImpl implements CatRepository {
   }
 
   @Override
-  public CatResponseDto save() {
-    return null;
+  public Optional<CatResponse> save(final CatRequest catRequest) {
+    log.info("Repository. Save cat: {}", catRequest);
+
+    ResponseEntity<CatResponse> catResponseEntity = restTemplate.exchange(
+        catsLink,
+        POST,
+        createEntityHeaderWithBody(catRequest, auth),
+        CatResponse.class);
+
+    return ofNullable(catResponseEntity.getBody());
   }
 
   @Override
-  public List<CatResponseDto> getAll() {
-    log.info("Get all dogs from another server");
+  public List<CatResponse> getAll() {
+    log.info("Repository. Get all cats");
 
-    return Arrays.asList(Objects.requireNonNull(restTemplate
-        .exchange(catsLink, GET, createEntityHeader(auth.getAuth()), CatResponseDto[].class)
-        .getBody()));
+    ResponseEntity<CatResponse[]> catResponseEntity = restTemplate.exchange(
+        catsLink,
+        GET,
+        createEntityHeaderWithoutBody(auth.getAuth()),
+        CatResponse[].class);
+
+    return asList(ofNullable(catResponseEntity.getBody())
+        .orElseThrow(() -> new HttpClientErrorException(BAD_REQUEST)));
+  }
+
+  @Override
+  public void deleteById(final long id) {
+    log.info("Repository. Delete cat by id: {}", id);
+
+    restTemplate.exchange(
+        catsLink + "/" + id,
+        DELETE,
+        createEntityHeaderWithoutBody(auth.getAuth()),
+        Object.class);
   }
 }

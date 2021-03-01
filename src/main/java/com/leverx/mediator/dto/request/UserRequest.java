@@ -12,7 +12,7 @@ import lombok.Data;
 
 /** @author Andrei Yahorau */
 @Data
-public class UserRequestDto {
+public class UserRequest {
 
   @NotNull
   private String firstName;
@@ -26,7 +26,7 @@ public class UserRequestDto {
   @NotNull
   @Pattern(
       regexp =
-          "(?=.*[0-9])(?=.*[\\.!?@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z\\.!@#$%^&*]{8," + "256}",
+          "(?=.*[0-9])(?=.*[.!?@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z.!@#$%^&*]{8,256}",
       message =
           "Password must contain lowercase and uppercase latin letters, numbers, special "
               + "symbols and be at least 8 characters")
@@ -35,7 +35,7 @@ public class UserRequestDto {
   @NotNull
   @Pattern(
       regexp =
-          "(?=.*[0-9])(?=.*[\\.!?@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z\\.!@#$%^&*]{8," + "256}",
+          "(?=.*[0-9])(?=.*[.!?@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z.!@#$%^&*]{8,256}",
       message =
           "Password must contain lowercase and uppercase latin letters, numbers, special "
               + "symbols and be at least 8 characters")

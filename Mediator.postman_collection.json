@@ -1,0 +1,110 @@
+{
+	"info": {
+		"_postman_id": "d02dc0c7-ad51-462c-b3e6-1793ea919c73",
+		"name": "Mediator",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all lists",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminPassword2021.",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "linkCats",
+						"value": "https://user-pets.cfapps.eu10.hana.ondemand.com/api/v1/cats",
+						"type": "text"
+					},
+					{
+						"key": "linkDogs",
+						"value": "https://user-pets.cfapps.eu10.hana.ondemand.com/api/v1/dogs",
+						"type": "text"
+					},
+					{
+						"key": "linkUsers",
+						"value": "https://user-pets.cfapps.eu10.hana.ondemand.com/api/v1/users",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostSapM}}/all",
+					"host": [
+						"{{hostSapM}}"
+					],
+					"path": [
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save user, cat, dog",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "adminPassword2021.",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\" :{\r\n        \"firstName\": \"QQQQ\",\r\n        \"lastName\": \"QQQQ\",\r\n        \"email\": \"myfosse5@mail.ru\",\r\n        \"password\": \"Password2021.\",\r\n        \"passwordConfirmation\": \"Password2021.\",\r\n        \"birthdate\": \"2021-02-18\"\r\n    },\r\n    \"cat\": {\r\n        \"name\": \"cat\",\r\n        \"birthdate\": \"1999-10-19\",\r\n        \"ownerId\": 1,\r\n        \"isBold\": true\r\n    },\r\n    \"dog\": {\r\n        \"name\": \"dog\",\r\n        \"birthdate\": \"1999-10-19\",\r\n        \"ownerId\": 1,\r\n        \"isGuideDog\": true\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostSapM}}/all",
+					"host": [
+						"{{hostSapM}}"
+					],
+					"path": [
+						"all"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

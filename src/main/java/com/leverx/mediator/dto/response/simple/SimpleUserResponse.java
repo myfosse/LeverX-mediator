@@ -5,16 +5,14 @@ import java.time.LocalDate;
 import com.leverx.mediator.model.ERole;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /** @author Andrei Yahorau */
 @Data
-@Builder(builderMethodName = "simpleUserResponseBuilder")
 @NoArgsConstructor
 @AllArgsConstructor
-public class SimpleUserResponseDto {
+public class SimpleUserResponse {
 
   private long id;
 

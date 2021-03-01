@@ -8,8 +8,11 @@ import javax.validation.constraints.Positive;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import lombok.Data;
+
 /** @author Andrei Yahorau */
-public class PetRequestDto {
+@Data
+public class PetRequest {
 
   @NotNull
   private String name;

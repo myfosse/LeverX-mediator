@@ -2,13 +2,15 @@ package com.leverx.mediator.service;
 
 import java.util.List;
 
-import com.leverx.mediator.dto.request.DogRequestDto;
-import com.leverx.mediator.dto.response.DogResponseDto;
+import com.leverx.mediator.dto.request.DogRequest;
+import com.leverx.mediator.dto.response.DogResponse;
 
 /** @author Andrei Yahorau */
 public interface DogService {
 
-  DogResponseDto save(final DogRequestDto catRequestDto);
+  DogResponse save(final DogRequest dogRequest);
 
-  List<DogRequestDto> getAll();
+  List<DogResponse> getAll();
+
+  void deleteById(final long id);
 }

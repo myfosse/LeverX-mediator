@@ -1,13 +1,17 @@
 package com.leverx.mediator.repository;
 
 import java.util.List;
+import java.util.Optional;
 
-import com.leverx.mediator.dto.response.CatResponseDto;
+import com.leverx.mediator.dto.request.CatRequest;
+import com.leverx.mediator.dto.response.CatResponse;
 
 /** @author Andrei Yahorau */
 public interface CatRepository {
 
-  CatResponseDto save();
+  Optional<CatResponse> save(final CatRequest catRequest);
 
-  List<CatResponseDto> getAll();
+  List<CatResponse> getAll();
+
+  void deleteById(final long id);
 }

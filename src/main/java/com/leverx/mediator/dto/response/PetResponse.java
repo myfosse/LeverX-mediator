@@ -2,20 +2,18 @@ package com.leverx.mediator.dto.response;
 
 import java.time.LocalDate;
 
-import com.leverx.mediator.dto.response.simple.SimpleUserResponseDto;
+import com.leverx.mediator.dto.response.simple.SimpleUserResponse;
 import com.leverx.mediator.model.EPetType;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /** @author Andrei Yahorau */
 @Data
-@Builder(builderMethodName = "petResponseBuilder")
 @NoArgsConstructor
 @AllArgsConstructor
-public class PetResponseDto {
+public class PetResponse {
 
   private long id;
 
@@ -25,5 +23,5 @@ public class PetResponseDto {
 
   private LocalDate birthdate;
 
-  private SimpleUserResponseDto owner;
+  private SimpleUserResponse owner;
 }

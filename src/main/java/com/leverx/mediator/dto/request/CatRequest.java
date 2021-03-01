@@ -3,11 +3,13 @@ package com.leverx.mediator.dto.request;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
+import lombok.ToString;
 
 /** @author Andrei Yahorau */
 @Data
-public class DogRequestDto extends PetRequestDto {
+@ToString(callSuper = true)
+public class CatRequest extends PetRequest {
 
   @NotNull
-  private boolean isGuideDog;
+  private boolean isBold;
 }

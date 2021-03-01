@@ -1,13 +1,17 @@
 package com.leverx.mediator.service.impl;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
-import com.leverx.mediator.dto.request.CatRequestDto;
-import com.leverx.mediator.dto.request.DogRequestDto;
-import com.leverx.mediator.dto.request.UserRequestDto;
-import com.leverx.mediator.dto.response.every.EveryListResponse;
-import com.leverx.mediator.dto.response.every.EverySingleResponse;
+import com.leverx.mediator.dto.request.multi.UserCatDogRequest;
+import com.leverx.mediator.dto.response.CatResponse;
+import com.leverx.mediator.dto.response.DogResponse;
+import com.leverx.mediator.dto.response.UserResponse;
+import com.leverx.mediator.dto.response.multi.UserCatDogListResponse;
+import com.leverx.mediator.dto.response.multi.UserCatDogResponse;
 import com.leverx.mediator.repository.CatRepository;
 import com.leverx.mediator.repository.DogRepository;
 import com.leverx.mediator.repository.UserRepository;
@@ -35,15 +39,45 @@ public class MultiServiceImpl implements MultiService {
   }
 
   @Override
-  public EverySingleResponse save(CatRequestDto catRequestDto, DogRequestDto dogRequestDto, UserRequestDto userRequestDto) {
-    return null;
+  public UserCatDogResponse save(final UserCatDogRequest userCatDogRequest) {
+    log.info("Service. Save user, cat, dog: {}", userCatDogRequest);
+
+    UserResponse userResponse = userRepository.save(userCatDogRequest.getUser())
+        .orElseThrow(() -> {
+          log.error("Service. Can't save user: {}", userCatDogRequest.getUser());
+
+          return new HttpClientErrorException(BAD_REQUEST);
+        });
+
+    CatResponse catResponse = catRepository.save(userCatDogRequest.getCat())
+        .orElseThrow(() -> {
+          log.error("Service. Can't save cat: {}", userCatDogRequest.getCat());
+
+          userRepository.deleteById(userResponse.getId());
+          return new HttpClientErrorException(BAD_REQUEST);
+        });
+
+    DogResponse dogResponse = dogRepository.save(userCatDogRequest.getDog())
+        .orElseThrow(() -> {
+          log.error("Service. Can't save dog: {}", userCatDogRequest.getDog());
+
+          userRepository.deleteById(userResponse.getId());
+          catRepository.deleteById(catResponse.getId());
+          return new HttpClientErrorException(BAD_REQUEST);
+        });
+
+    return UserCatDogResponse.builder()
+        .user(userResponse)
+        .cat(catResponse)
+        .dog(dogResponse)
+        .build();
   }
 
   @Override
-  public EveryListResponse getAllLists() {
-    log.info("Service. Get all lists");
+  public UserCatDogListResponse getAllLists() {
+    log.info("Service. Get lists of users, cats, dogs");
 
-    return EveryListResponse.builder()
+    return UserCatDogListResponse.builder()
         .cats(catRepository.getAll())
         .dogs(dogRepository.getAll())
         .users(userRepository.getAll())
