@@ -1,1 +1,6 @@
-
+leverx:
+  com:
+    link:
+      cats: "https://user-pets.cfapps.eu10.hana.ondemand.com/api/v1/cats"
+      dogs: "https://user-pets.cfapps.eu10.hana.ondemand.com/api/v1/dogs"
+      users: "https://user-pets.cfapps.eu10.hana.ondemand.com/api/v1/users"
