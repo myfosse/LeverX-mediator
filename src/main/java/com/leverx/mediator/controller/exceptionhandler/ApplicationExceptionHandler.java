@@ -1,4 +1,4 @@
-package com.leverx.mediator.controller.handler;
+package com.leverx.mediator.controller.exceptionhandler;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
@@ -13,7 +13,7 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.leverx.mediator.response.payload.MessageResponse;
+import com.leverx.mediator.payload.response.MessageResponse;
 
 @ControllerAdvice
 public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {

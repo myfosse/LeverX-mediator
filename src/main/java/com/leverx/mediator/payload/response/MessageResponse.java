@@ -1,4 +1,4 @@
-package com.leverx.mediator.response.payload;
+package com.leverx.mediator.payload.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -5,8 +5,6 @@ import static lombok.AccessLevel.PRIVATE;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 
-import com.leverx.mediator.model.auth.Auth;
-
 import lombok.NoArgsConstructor;
 
 /** @author Andrei Yahorau */
@@ -19,9 +17,9 @@ public final class EntityHeaderCreation {
     return new HttpEntity<>(headers);
   }
 
-  public static <T> HttpEntity<T> createEntityHeaderWithBody(final T entity, final Auth auth) {
+  public static <T> HttpEntity<T> createEntityHeaderWithBody(final T entity, final String auth) {
     HttpHeaders headers = new HttpHeaders();
-    headers.add("Authorization", auth.getAuth());
+    headers.add("Authorization", auth);
     return new HttpEntity<>(entity, headers);
   }
 }
