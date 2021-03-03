@@ -1,12 +1,9 @@
 package com.leverx.mediator.service.impl;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 import com.leverx.mediator.dto.request.DogRequest;
 import com.leverx.mediator.dto.response.DogResponse;
@@ -31,12 +28,7 @@ public class DogServiceImpl implements DogService {
   public DogResponse save(final DogRequest dogRequest) {
     log.info("Service. Save dog: {}", dogRequest);
 
-    return dogRepository.save(dogRequest)
-        .orElseThrow(() -> {
-          log.error("Service. Can't save dog: {}", dogRequest);
-
-          return new HttpClientErrorException(BAD_REQUEST);
-        });
+    return dogRepository.save(dogRequest);
   }
 
   @Override

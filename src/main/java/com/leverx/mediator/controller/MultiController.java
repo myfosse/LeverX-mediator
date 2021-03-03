@@ -39,7 +39,7 @@ public class MultiController {
   @RequestScope
   public ResponseEntity<UserCatDogListResponse> getAllLists(
       @RequestHeader("Authorization") final String authHeader) {
-    log.info("Controller. Get lists of all entities with auth request: {}", authHeader);
+    log.info("Controller. Get lists of all entities");
 
     auth.setAuth(authHeader);
 

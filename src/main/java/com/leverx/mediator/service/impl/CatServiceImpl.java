@@ -1,12 +1,9 @@
 package com.leverx.mediator.service.impl;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 import com.leverx.mediator.dto.request.CatRequest;
 import com.leverx.mediator.dto.response.CatResponse;
@@ -31,12 +28,7 @@ public class CatServiceImpl implements CatService {
   public CatResponse save(final CatRequest catRequest) {
     log.info("Service. Save cat: {}", catRequest);
 
-    return catRepository.save(catRequest)
-        .orElseThrow(() -> {
-          log.error("Service. Can't save cat: {}", catRequest);
-
-          return new HttpClientErrorException(BAD_REQUEST);
-        });
+    return catRepository.save(catRequest);
   }
 
   @Override
