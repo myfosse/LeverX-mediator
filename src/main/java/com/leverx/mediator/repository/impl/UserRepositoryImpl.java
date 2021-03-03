@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserRepositoryImpl implements UserRepository {
 
   @Value("${leverx.com.link.sap.users}")
-  private String usersLink;
+  private final String usersLink;
 
   private final Auth auth;
 

@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 public class DogRepositoryImpl implements DogRepository {
 
   @Value("${leverx.com.link.sap.dogs}")
-  private String dogsLink;
+  private final String dogsLink;
 
   private final Auth auth;
 

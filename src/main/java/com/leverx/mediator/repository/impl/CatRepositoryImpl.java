@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CatRepositoryImpl implements CatRepository {
 
   @Value("${leverx.com.link.sap.cats}")
-  private String catsLink;
+  private final String catsLink;
 
   private final Auth auth;
 

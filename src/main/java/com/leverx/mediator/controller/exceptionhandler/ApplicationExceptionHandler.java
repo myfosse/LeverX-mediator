@@ -18,6 +18,7 @@ import com.leverx.mediator.payload.response.MessageResponse;
 @ControllerAdvice
 public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {
 
+  // HttpMessageConversionException
   @ExceptionHandler(HttpClientErrorException.class)
   protected ResponseEntity<HttpClientErrorException> handleHttpClientErrorException(
       final HttpClientErrorException exception) {
