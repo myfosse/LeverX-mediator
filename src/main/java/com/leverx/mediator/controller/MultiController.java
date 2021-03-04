@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.annotation.RequestScope;
 
 import com.leverx.mediator.dto.request.multi.UserCatDogRequest;
 import com.leverx.mediator.dto.response.multi.UserCatDogListResponse;
@@ -36,7 +35,6 @@ public class MultiController {
   }
 
   @GetMapping
-  @RequestScope
   public ResponseEntity<UserCatDogListResponse> getAllLists(
       @RequestHeader("Authorization") final String authHeader) {
     log.info("Controller. Get lists of all entities");
@@ -47,7 +45,6 @@ public class MultiController {
   }
 
   @PostMapping
-  @RequestScope
   public ResponseEntity<UserCatDogResponse> saveUserWithPets(
       @RequestHeader("Authorization") final String authHeader,
       @Valid @RequestBody final UserCatDogRequest userCatDogRequest) {
