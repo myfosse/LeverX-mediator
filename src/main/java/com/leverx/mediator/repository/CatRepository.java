@@ -8,7 +8,7 @@ import com.leverx.mediator.dto.response.CatResponse;
 /** @author Andrei Yahorau */
 public interface CatRepository {
 
-  CatResponse save(final CatRequest catRequest);
+  CatResponse save(final CatRequest cat);
 
   List<CatResponse> getAll();
 

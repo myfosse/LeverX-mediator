@@ -20,7 +20,7 @@ public class CatServiceImpl implements CatService {
   private final CatRepository catRepository;
 
   @Autowired
-  public CatServiceImpl(CatRepository catRepository) {
+  public CatServiceImpl(final CatRepository catRepository) {
     this.catRepository = catRepository;
   }
 

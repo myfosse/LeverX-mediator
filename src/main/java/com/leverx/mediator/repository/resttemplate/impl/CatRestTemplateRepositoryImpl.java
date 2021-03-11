@@ -1,4 +1,4 @@
-package com.leverx.mediator.repository.impl;
+package com.leverx.mediator.repository.resttemplate.impl;
 
 import static java.util.Arrays.asList;
 
@@ -6,8 +6,9 @@ import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
-import static com.leverx.mediator.repository.header.EntityHeaderCreation.createEntityHeaderWithoutBody;
-import static com.leverx.mediator.repository.header.EntityHeaderCreation.createEntityHeaderWithBody;
+
+import static com.leverx.mediator.repository.resttemplate.header.EntityHeaderCreation.createEntityHeaderWithBody;
+import static com.leverx.mediator.repository.resttemplate.header.EntityHeaderCreation.createEntityHeaderWithoutBody;
 
 import java.util.List;
 
@@ -28,9 +29,9 @@ import lombok.extern.slf4j.Slf4j;
 @Repository
 @Slf4j
 @RequiredArgsConstructor
-public class CatRepositoryImpl implements CatRepository {
+public class CatRestTemplateRepositoryImpl implements CatRepository {
 
-  @Value("${leverx.com.link.sap.cats}")
+  @Value("${sap.link.cats}")
   private final String catsLink;
 
   private final Auth auth;

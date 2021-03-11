@@ -1,4 +1,4 @@
-package com.leverx.mediator.repository.impl;
+package com.leverx.mediator.repository.resttemplate.impl;
 
 import static java.util.Arrays.asList;
 
@@ -6,8 +6,8 @@ import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
-import static com.leverx.mediator.repository.header.EntityHeaderCreation.createEntityHeaderWithoutBody;
-import static com.leverx.mediator.repository.header.EntityHeaderCreation.createEntityHeaderWithBody;
+import static com.leverx.mediator.repository.resttemplate.header.EntityHeaderCreation.createEntityHeaderWithBody;
+import static com.leverx.mediator.repository.resttemplate.header.EntityHeaderCreation.createEntityHeaderWithoutBody;
 
 import java.util.List;
 
@@ -28,9 +28,9 @@ import lombok.extern.slf4j.Slf4j;
 @Repository
 @Slf4j
 @RequiredArgsConstructor
-public class UserRepositoryImpl implements UserRepository {
+public class UserRestTemplateRepositoryImpl implements UserRepository {
 
-  @Value("${leverx.com.link.sap.users}")
+  @Value("${sap.link.users}")
   private final String usersLink;
 
   private final Auth auth;
@@ -41,11 +41,12 @@ public class UserRepositoryImpl implements UserRepository {
   public UserResponse save(final UserRequest userRequest) {
     log.info("Repository. Save user: {}", userRequest);
 
-    ResponseEntity<UserResponse> userResponseEntity = restTemplate.exchange(
-        usersLink,
-        POST,
-        createEntityHeaderWithBody(userRequest, auth.getAuth()),
-        UserResponse.class);
+    ResponseEntity<UserResponse> userResponseEntity =
+        restTemplate.exchange(
+            usersLink,
+            POST,
+            createEntityHeaderWithBody(userRequest, auth.getAuth()),
+            UserResponse.class);
 
     return userResponseEntity.getBody();
   }
@@ -54,11 +55,9 @@ public class UserRepositoryImpl implements UserRepository {
   public List<UserResponse> getAll() {
     log.info("Repository. Get all users");
 
-    ResponseEntity<UserResponse[]> userResponseEntity = restTemplate.exchange(
-        usersLink,
-        GET,
-        createEntityHeaderWithoutBody(auth.getAuth()),
-        UserResponse[].class);
+    ResponseEntity<UserResponse[]> userResponseEntity =
+        restTemplate.exchange(
+            usersLink, GET, createEntityHeaderWithoutBody(auth.getAuth()), UserResponse[].class);
 
     return asList(userResponseEntity.getBody());
   }
@@ -68,9 +67,6 @@ public class UserRepositoryImpl implements UserRepository {
     log.info("Repository. Delete user by id: {}", id);
 
     restTemplate.exchange(
-        usersLink + "/" + id,
-        DELETE,
-        createEntityHeaderWithoutBody(auth.getAuth()),
-        Object.class);
+        usersLink + "/" + id, DELETE, createEntityHeaderWithoutBody(auth.getAuth()), Object.class);
   }
 }

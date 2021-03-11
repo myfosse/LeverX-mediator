@@ -8,7 +8,7 @@ import com.leverx.mediator.dto.response.DogResponse;
 /** @author Andrei Yahorau */
 public interface DogRepository {
 
-  DogResponse save(final DogRequest dogRequest);
+  DogResponse save(final DogRequest dog);
 
   List<DogResponse> getAll();
 

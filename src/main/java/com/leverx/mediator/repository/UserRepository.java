@@ -8,7 +8,7 @@ import com.leverx.mediator.dto.response.UserResponse;
 /** @author Andrei Yahorau */
 public interface UserRepository {
 
-  UserResponse save(final UserRequest userRequest);
+  UserResponse save(final UserRequest user);
 
   List<UserResponse> getAll();
 

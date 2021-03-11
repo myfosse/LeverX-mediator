@@ -36,7 +36,7 @@ public class MultiController {
 
   @GetMapping
   public ResponseEntity<UserCatDogListResponse> getAllLists(
-      @RequestHeader("Authorization") final String authHeader) {
+      @RequestHeader(value = "Authorization", defaultValue = "") final String authHeader) {
     log.info("Controller. Get lists of all entities");
 
     auth.setAuth(authHeader);
@@ -46,7 +46,7 @@ public class MultiController {
 
   @PostMapping
   public ResponseEntity<UserCatDogResponse> saveUserWithPets(
-      @RequestHeader("Authorization") final String authHeader,
+      @RequestHeader(value = "Authorization", defaultValue = "") final String authHeader,
       @Valid @RequestBody final UserCatDogRequest userCatDogRequest) {
     log.info("Controller. Save user, cat, dog request: {}", userCatDogRequest);
 
