@@ -1,23 +1,15 @@
 package com.leverx.mediator.repository.destination.creator;
 
-import static lombok.AccessLevel.PRIVATE;
+import java.io.IOException;
 
-import org.apache.http.client.HttpClient;
-
-import com.sap.cloud.sdk.cloudplatform.connectivity.DestinationAccessor;
-import com.sap.cloud.sdk.cloudplatform.connectivity.HttpClientAccessor;
-import com.sap.cloud.sdk.cloudplatform.connectivity.HttpDestination;
-
-import lombok.NoArgsConstructor;
+import org.apache.http.HttpResponse;
 
 /** @author Andrei Yahorau */
-@NoArgsConstructor(access = PRIVATE)
-public final class DestinationCreator {
+public interface DestinationCreator {
 
-  private static final String DESTINATION_NAME = "AdminAuth";
+  HttpResponse executeHttpGet(final String url) throws IOException;
 
-  public static final HttpDestination DESTINATION =
-      DestinationAccessor.getDestination(DESTINATION_NAME).asHttp();
+  HttpResponse executeHttpPost(final String url, final Object entity) throws IOException;
 
-  public static final HttpClient HTTP_CLIENT = HttpClientAccessor.getHttpClient(DESTINATION);
+  HttpResponse executeHttpDelete(final String url) throws IOException;
 }

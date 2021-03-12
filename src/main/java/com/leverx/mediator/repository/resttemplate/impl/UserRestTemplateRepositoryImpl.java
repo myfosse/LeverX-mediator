@@ -11,7 +11,9 @@ import static com.leverx.mediator.repository.resttemplate.header.EntityHeaderCre
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
@@ -21,21 +23,28 @@ import com.leverx.mediator.dto.response.UserResponse;
 import com.leverx.mediator.model.auth.Auth;
 import com.leverx.mediator.repository.UserRepository;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /** @author Andrei Yahorau */
 @Repository
 @Slf4j
-@RequiredArgsConstructor
 public class UserRestTemplateRepositoryImpl implements UserRepository {
 
-  @Value("${sap.link.users}")
   private final String usersLink;
 
   private final Auth auth;
 
-  private final RestTemplate restTemplate = new RestTemplate();
+  private final RestTemplate restTemplate;
+
+  @Autowired
+  public UserRestTemplateRepositoryImpl(
+      final RestTemplateBuilder builder,
+      final Auth auth,
+      @Value("${sap.link.users}") final String usersLink) {
+    this.restTemplate = builder.build();
+    this.auth = auth;
+    this.usersLink = usersLink;
+  }
 
   @Override
   public UserResponse save(final UserRequest userRequest) {

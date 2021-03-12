@@ -1,5 +1,10 @@
 package com.leverx.mediator.transactional.impl;
 
+import static org.springframework.web.context.request.RequestAttributes.SCOPE_REQUEST;
+import static org.springframework.web.context.request.RequestContextHolder.currentRequestAttributes;
+
+import static com.leverx.mediator.transactional.constant.AttributeConstants.CAT_ID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
@@ -16,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CatTransactionImpl implements CatTransaction {
 
-  private long catId;
   private final CatRepository catRepository;
 
   @Autowired
@@ -30,19 +34,21 @@ public class CatTransactionImpl implements CatTransaction {
 
     try {
       CatResponse catResponse = catRepository.save(cat);
-      catId = catResponse.getId();
+      currentRequestAttributes().setAttribute(CAT_ID, catResponse.getId(), SCOPE_REQUEST);
       return catResponse;
     } catch (final HttpClientErrorException exception) {
       log.error("CatTransaction. Can't save cat: {}", cat);
-
       throw exception;
     }
   }
 
   @Override
   public void rollback() {
-    log.info("CatTransaction. Rollback cat with id: {}", catId);
 
-    catRepository.deleteById(catId);
+    long id = (long) currentRequestAttributes().getAttribute(CAT_ID, SCOPE_REQUEST);
+
+    log.info("CatTransaction. Rollback cat with id: {}", id);
+
+    catRepository.deleteById(id);
   }
 }

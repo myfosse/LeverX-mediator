@@ -1,5 +1,10 @@
 package com.leverx.mediator.transactional.impl;
 
+import static org.springframework.web.context.request.RequestAttributes.SCOPE_REQUEST;
+import static org.springframework.web.context.request.RequestContextHolder.currentRequestAttributes;
+
+import static com.leverx.mediator.transactional.constant.AttributeConstants.USER_ID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
@@ -16,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserTransactionImpl implements UserTransaction {
 
-  private long userId;
   private final UserRepository userRepository;
 
   @Autowired
@@ -30,7 +34,7 @@ public class UserTransactionImpl implements UserTransaction {
 
     try {
       UserResponse userResponse = userRepository.save(user);
-      userId = userResponse.getId();
+      currentRequestAttributes().setAttribute(USER_ID, userResponse.getId(), SCOPE_REQUEST);
       return userResponse;
     } catch (final HttpClientErrorException exception) {
       log.error("UserTransaction. Can't save user: {}", user);
@@ -41,8 +45,11 @@ public class UserTransactionImpl implements UserTransaction {
 
   @Override
   public void rollback() {
-    log.info("UserTransaction. Rollback user with id: {}", userId);
 
-    userRepository.deleteById(userId);
+    long id = (long) currentRequestAttributes().getAttribute(USER_ID, SCOPE_REQUEST);
+
+    log.info("UserTransaction. Rollback user with id: {}", id);
+
+    userRepository.deleteById(id);
   }
 }
