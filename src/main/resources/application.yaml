@@ -1,7 +1,8 @@
-leverx:
-  com:
-    link:
-      sap:
-        cats: "https://user-pets.cfapps.eu10.hana.ondemand.com/api/v1/cats"
-        dogs: "https://user-pets.cfapps.eu10.hana.ondemand.com/api/v1/dogs"
-        users: "https://user-pets.cfapps.eu10.hana.ondemand.com/api/v1/users"
+sap:
+  link:
+    cats: "https://user-pets.cfapps.eu10.hana.ondemand.com/api/v1/cats"
+    dogs: "https://user-pets.cfapps.eu10.hana.ondemand.com/api/v1/dogs"
+    users: "https://user-pets.cfapps.eu10.hana.ondemand.com/api/v1/users"
+  request:
+    accept-type: "application/json"
+    content-type: "application/json"

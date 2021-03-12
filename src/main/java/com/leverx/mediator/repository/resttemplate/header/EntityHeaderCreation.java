@@ -1,4 +1,4 @@
-package com.leverx.mediator.repository.header;
+package com.leverx.mediator.repository.resttemplate.header;
 
 import static lombok.AccessLevel.PRIVATE;
 

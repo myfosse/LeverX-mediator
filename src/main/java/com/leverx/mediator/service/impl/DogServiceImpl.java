@@ -20,7 +20,7 @@ public class DogServiceImpl implements DogService {
   private final DogRepository dogRepository;
 
   @Autowired
-  public DogServiceImpl(DogRepository dogRepository) {
+  public DogServiceImpl(final DogRepository dogRepository) {
     this.dogRepository = dogRepository;
   }
 

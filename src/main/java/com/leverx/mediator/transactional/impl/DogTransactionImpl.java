@@ -1,5 +1,10 @@
 package com.leverx.mediator.transactional.impl;
 
+import static org.springframework.web.context.request.RequestAttributes.SCOPE_REQUEST;
+import static org.springframework.web.context.request.RequestContextHolder.currentRequestAttributes;
+
+import static com.leverx.mediator.transactional.constant.AttributeConstants.DOG_ID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
@@ -16,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DogTransactionImpl implements DogTransaction {
 
-  private long dogId;
   private final DogRepository dogRepository;
 
   @Autowired
@@ -30,7 +34,7 @@ public class DogTransactionImpl implements DogTransaction {
 
     try {
       DogResponse dogResponse = dogRepository.save(dog);
-      dogId = dogResponse.getId();
+      currentRequestAttributes().setAttribute(DOG_ID, dogResponse.getId(), SCOPE_REQUEST);
       return dogResponse;
     } catch (final HttpClientErrorException exception) {
       log.error("DogTransaction. Can't save dog: {}", dog);
@@ -41,8 +45,11 @@ public class DogTransactionImpl implements DogTransaction {
 
   @Override
   public void rollback() {
-    log.info("CatTransaction. Rollback dog with id: {}", dogId);
 
-    dogRepository.deleteById(dogId);
+    long id = (long) currentRequestAttributes().getAttribute(DOG_ID, SCOPE_REQUEST);
+
+    log.info("CatTransaction. Rollback dog with id: {}", id);
+
+    dogRepository.deleteById(id);
   }
 }

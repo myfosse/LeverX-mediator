@@ -3,11 +3,10 @@ package com.leverx.mediator;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+/** @author Andrei Yahorau */
 @SpringBootTest
-class MediatorApplicationTests {
+public class MediatorApplicationTests {
 
   @Test
-  void contextLoads() {
-  }
-
+  void contextLoads() {}
 }
