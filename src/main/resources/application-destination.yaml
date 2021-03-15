@@ -1,0 +1,4 @@
+sap:
+  request:
+    accept-type: "application/json"
+    content-type: "application/json"

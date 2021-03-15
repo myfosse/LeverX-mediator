@@ -9,7 +9,7 @@ public interface DestinationCreator {
 
   HttpResponse executeHttpGet(final String url) throws IOException;
 
-  HttpResponse executeHttpPost(final String url, final Object entity) throws IOException;
+  HttpResponse executeHttpPost(final String url, final String jsonObject) throws IOException;
 
   HttpResponse executeHttpDelete(final String url) throws IOException;
 }

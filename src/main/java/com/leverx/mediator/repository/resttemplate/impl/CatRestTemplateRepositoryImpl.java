@@ -14,6 +14,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
@@ -28,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 /** @author Andrei Yahorau */
 @Repository
 @Slf4j
+@Profile("resttemplate")
 public class CatRestTemplateRepositoryImpl implements CatRepository {
 
   private final String catsLink;

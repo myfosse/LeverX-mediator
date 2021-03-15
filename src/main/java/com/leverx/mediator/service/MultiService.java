@@ -9,5 +9,5 @@ public interface MultiService {
 
   UserCatDogResponse save(final UserCatDogRequest userCatDogRequest);
 
-  UserCatDogListResponse getAllLists();
+  UserCatDogListResponse getAllUsersAndPets();
 }

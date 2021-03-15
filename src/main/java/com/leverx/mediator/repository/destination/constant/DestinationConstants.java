@@ -25,8 +25,6 @@ public final class DestinationConstants {
 
   public static final String HEADER_CONTENT_TYPE = "Content-type";
 
-  public static final String CHARSET_UTF_8 = "UTF-8";
-
   public static final String PREFIX = DESTINATION.getUri() + "/api/v1";
 
   public static final String ENDPOINT_CATS  = PREFIX + "/cats";
