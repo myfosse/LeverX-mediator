@@ -2,9 +2,9 @@ package com.leverx.mediator.repository.destination.impl;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import static com.leverx.mediator.dto.converter.DogConverter.convertDogToJsonString;
-import static com.leverx.mediator.dto.converter.DogConverter.convertStringToDogResponse;
-import static com.leverx.mediator.dto.converter.DogConverter.convertStringToListOfDogResponse;
+import static com.leverx.mediator.converter.ObjectConverter.convertJsonStringToListOfObjects;
+import static com.leverx.mediator.converter.ObjectConverter.convertJsonStringToObject;
+import static com.leverx.mediator.converter.ObjectConverter.convertObjectToJsonString;
 import static com.leverx.mediator.repository.destination.constant.DestinationConstants.PATH_DOGS;
 
 import java.io.IOException;
@@ -46,9 +46,9 @@ public class DogDestinationRepositoryImpl implements DogRepository {
     try {
 
       HttpResponse httpResponse =
-          destinationCreator.executeHttpPost(PATH_DOGS, convertDogToJsonString(dog));
+          destinationCreator.executeHttpPost(PATH_DOGS, convertObjectToJsonString(dog));
       String responseString = EntityUtils.toString(httpResponse.getEntity(), UTF_8);
-      return convertStringToDogResponse(responseString);
+      return convertJsonStringToObject(responseString, DogResponse.class);
 
     } catch (final UnsupportedEncodingException e) {
       log.error("DogRepository. Unsupported encoding format while convert DogResponse");
@@ -72,7 +72,7 @@ public class DogDestinationRepositoryImpl implements DogRepository {
 
       HttpResponse httpResponse = destinationCreator.executeHttpGet(PATH_DOGS);
       String responseString = EntityUtils.toString(httpResponse.getEntity(), UTF_8);
-      return convertStringToListOfDogResponse(responseString);
+      return convertJsonStringToListOfObjects(responseString, DogResponse[].class);
 
     } catch (final JsonProcessingException e) {
       log.error("DogRepository. Can't convert to DogResponse");
