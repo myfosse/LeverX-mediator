@@ -11,28 +11,32 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leverx.mediator.repository.destination.creator.DestinationCreator;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /** @author Andrei Yahorau */
-@Component
-@RequiredArgsConstructor
 @Slf4j
+@Profile("destination")
+@Component
 public class DestinationCreatorImpl implements DestinationCreator {
 
-  @Value("${sap.request.accept-type}")
   private final String acceptType;
 
-  @Value("${sap.request.content-type}")
   private final String contentType;
 
-  private final ObjectMapper mapper;
+  @Autowired
+  public DestinationCreatorImpl(
+      @Value("${sap.request.accept-type}") final String acceptType,
+      @Value("${sap.request.content-type}") final String contentType) {
+    this.acceptType = acceptType;
+    this.contentType = contentType;
+  }
 
   @Override
   public HttpResponse executeHttpGet(final String url) throws IOException {
@@ -44,11 +48,12 @@ public class DestinationCreatorImpl implements DestinationCreator {
   }
 
   @Override
-  public HttpResponse executeHttpPost(final String url, final Object entity) throws IOException {
-    log.info("HttpResponse. Post request by URL {} with entity {}", url, entity);
+  public HttpResponse executeHttpPost(final String url, final String jsonObject)
+      throws IOException {
+    log.info("HttpResponse. Post request by URL {} with entity {}", url, jsonObject);
 
     HttpPost post = new HttpPost(url);
-    post.setEntity(new StringEntity(mapper.writeValueAsString(entity)));
+    post.setEntity(new StringEntity(jsonObject));
     post.setHeader(HEADER_ACCEPT, acceptType);
     post.setHeader(HEADER_CONTENT_TYPE, contentType);
 

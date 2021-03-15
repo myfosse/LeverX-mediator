@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.leverx.mediator.dto.request.DogRequest;
 import com.leverx.mediator.dto.response.DogResponse;
 
 import lombok.NoArgsConstructor;
@@ -16,15 +17,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = PRIVATE)
 public final class DogConverter {
 
-  private static final ObjectMapper MAPPER = new ObjectMapper();
+  private static final ObjectMapper mapper = new ObjectMapper();
+
+  public static String convertDogToJsonString(final DogRequest dog) throws JsonProcessingException {
+    return mapper.writeValueAsString(dog);
+  }
 
   public static DogResponse convertStringToDogResponse(final String dog)
       throws JsonProcessingException {
-    return MAPPER.readValue(dog, DogResponse.class);
+    return mapper.readValue(dog, DogResponse.class);
   }
 
   public static List<DogResponse> convertStringToListOfDogResponse(final String dogs)
       throws JsonProcessingException {
-    return asList(MAPPER.readValue(dogs, DogResponse[].class));
+    return asList(mapper.readValue(dogs, DogResponse[].class));
   }
 }

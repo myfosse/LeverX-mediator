@@ -44,7 +44,7 @@ public class MultiServiceImpl implements MultiService {
   }
 
   @Override
-  public UserCatDogListResponse getAllLists() {
+  public UserCatDogListResponse getAllUsersAndPets() {
     log.info("Service. Get lists of users, cats, dogs");
 
     return UserCatDogListResponse.builder()

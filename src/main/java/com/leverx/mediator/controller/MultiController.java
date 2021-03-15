@@ -41,7 +41,7 @@ public class MultiController {
 
     auth.setAuth(authHeader);
 
-    return ResponseEntity.ok(multiService.getAllLists());
+    return ResponseEntity.ok(multiService.getAllUsersAndPets());
   }
 
   @PostMapping
