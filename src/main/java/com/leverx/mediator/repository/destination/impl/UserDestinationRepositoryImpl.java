@@ -2,10 +2,10 @@ package com.leverx.mediator.repository.destination.impl;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import static com.leverx.mediator.dto.converter.UserConverter.convertStringToListOfUserResponse;
-import static com.leverx.mediator.dto.converter.UserConverter.convertStringToUserResponse;
-import static com.leverx.mediator.dto.converter.UserConverter.convertUserToJsonString;
-import static com.leverx.mediator.repository.destination.constant.DestinationConstants.ENDPOINT_USERS;
+import static com.leverx.mediator.converter.ObjectConverter.convertJsonStringToListOfObjects;
+import static com.leverx.mediator.converter.ObjectConverter.convertJsonStringToObject;
+import static com.leverx.mediator.converter.ObjectConverter.convertObjectToJsonString;
+import static com.leverx.mediator.repository.destination.constant.DestinationConstants.PATH_USERS;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -46,9 +46,9 @@ public class UserDestinationRepositoryImpl implements UserRepository {
     try {
 
       HttpResponse httpResponse =
-          destinationCreator.executeHttpPost(ENDPOINT_USERS, convertUserToJsonString(user));
+          destinationCreator.executeHttpPost(PATH_USERS, convertObjectToJsonString(user));
       String responseString = EntityUtils.toString(httpResponse.getEntity(), UTF_8);
-      return convertStringToUserResponse(responseString);
+      return convertJsonStringToObject(responseString, UserResponse.class);
 
     } catch (final UnsupportedEncodingException e) {
       log.error("UserRepository. Unsupported encoding format while convert UserResponse");
@@ -70,9 +70,9 @@ public class UserDestinationRepositoryImpl implements UserRepository {
 
     try {
 
-      HttpResponse httpResponse = destinationCreator.executeHttpGet(ENDPOINT_USERS);
+      HttpResponse httpResponse = destinationCreator.executeHttpGet(PATH_USERS);
       String responseString = EntityUtils.toString(httpResponse.getEntity(), UTF_8);
-      return convertStringToListOfUserResponse(responseString);
+      return convertJsonStringToListOfObjects(responseString, UserResponse[].class);
 
     } catch (final JsonProcessingException e) {
       log.error("UserRepository. Can't convert to UserResponse");
@@ -88,7 +88,7 @@ public class UserDestinationRepositoryImpl implements UserRepository {
   public void deleteById(final long id) {
     log.info("UserRepository. Delete user by id: {}", id);
 
-    String url = ENDPOINT_USERS + "/" + id;
+    String url = PATH_USERS + "/" + id;
 
     try {
 

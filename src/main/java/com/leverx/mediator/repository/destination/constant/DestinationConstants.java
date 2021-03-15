@@ -21,15 +21,11 @@ public final class DestinationConstants {
 
   public static final HttpClient HTTP_CLIENT = getHttpClient(DESTINATION);
 
-  public static final String HEADER_ACCEPT = "Accept";
-
-  public static final String HEADER_CONTENT_TYPE = "Content-type";
-
   public static final String PREFIX = DESTINATION.getUri() + "/api/v1";
 
-  public static final String ENDPOINT_CATS  = PREFIX + "/cats";
+  public static final String PATH_CATS = PREFIX + "/cats";
 
-  public static final String ENDPOINT_DOGS  = PREFIX + "/dogs";
+  public static final String PATH_DOGS = PREFIX + "/dogs";
 
-  public static final String ENDPOINT_USERS = PREFIX + "/users";
+  public static final String PATH_USERS = PREFIX + "/users";
 }

@@ -2,10 +2,10 @@ package com.leverx.mediator.repository.destination.impl;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import static com.leverx.mediator.dto.converter.DogConverter.convertDogToJsonString;
-import static com.leverx.mediator.dto.converter.DogConverter.convertStringToDogResponse;
-import static com.leverx.mediator.dto.converter.DogConverter.convertStringToListOfDogResponse;
-import static com.leverx.mediator.repository.destination.constant.DestinationConstants.ENDPOINT_DOGS;
+import static com.leverx.mediator.converter.ObjectConverter.convertJsonStringToListOfObjects;
+import static com.leverx.mediator.converter.ObjectConverter.convertJsonStringToObject;
+import static com.leverx.mediator.converter.ObjectConverter.convertObjectToJsonString;
+import static com.leverx.mediator.repository.destination.constant.DestinationConstants.PATH_DOGS;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -46,9 +46,9 @@ public class DogDestinationRepositoryImpl implements DogRepository {
     try {
 
       HttpResponse httpResponse =
-          destinationCreator.executeHttpPost(ENDPOINT_DOGS, convertDogToJsonString(dog));
+          destinationCreator.executeHttpPost(PATH_DOGS, convertObjectToJsonString(dog));
       String responseString = EntityUtils.toString(httpResponse.getEntity(), UTF_8);
-      return convertStringToDogResponse(responseString);
+      return convertJsonStringToObject(responseString, DogResponse.class);
 
     } catch (final UnsupportedEncodingException e) {
       log.error("DogRepository. Unsupported encoding format while convert DogResponse");
@@ -70,9 +70,9 @@ public class DogDestinationRepositoryImpl implements DogRepository {
 
     try {
 
-      HttpResponse httpResponse = destinationCreator.executeHttpGet(ENDPOINT_DOGS);
+      HttpResponse httpResponse = destinationCreator.executeHttpGet(PATH_DOGS);
       String responseString = EntityUtils.toString(httpResponse.getEntity(), UTF_8);
-      return convertStringToListOfDogResponse(responseString);
+      return convertJsonStringToListOfObjects(responseString, DogResponse[].class);
 
     } catch (final JsonProcessingException e) {
       log.error("DogRepository. Can't convert to DogResponse");
@@ -88,7 +88,7 @@ public class DogDestinationRepositoryImpl implements DogRepository {
   public void deleteById(final long id) {
     log.info("DogRepository. Delete dog by id: {}", id);
 
-    String url = ENDPOINT_DOGS + "/" + id;
+    String url = PATH_DOGS + "/" + id;
 
     try {
 

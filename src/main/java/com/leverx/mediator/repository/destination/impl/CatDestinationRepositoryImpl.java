@@ -2,10 +2,10 @@ package com.leverx.mediator.repository.destination.impl;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import static com.leverx.mediator.dto.converter.CatConverter.convertCatToJsonString;
-import static com.leverx.mediator.dto.converter.CatConverter.convertStringToCatResponse;
-import static com.leverx.mediator.dto.converter.CatConverter.convertStringToListOfCatResponse;
-import static com.leverx.mediator.repository.destination.constant.DestinationConstants.ENDPOINT_CATS;
+import static com.leverx.mediator.converter.ObjectConverter.convertJsonStringToListOfObjects;
+import static com.leverx.mediator.converter.ObjectConverter.convertJsonStringToObject;
+import static com.leverx.mediator.converter.ObjectConverter.convertObjectToJsonString;
+import static com.leverx.mediator.repository.destination.constant.DestinationConstants.PATH_CATS;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -46,9 +46,9 @@ public class CatDestinationRepositoryImpl implements CatRepository {
     try {
 
       HttpResponse httpResponse =
-          destinationCreator.executeHttpPost(ENDPOINT_CATS, convertCatToJsonString(cat));
+          destinationCreator.executeHttpPost(PATH_CATS, convertObjectToJsonString(cat));
       String responseString = EntityUtils.toString(httpResponse.getEntity(), UTF_8);
-      return convertStringToCatResponse(responseString);
+      return convertJsonStringToObject(responseString, CatResponse.class);
 
     } catch (final UnsupportedEncodingException e) {
       log.error("CatRepository. Unsupported encoding format while convert CatResponse");
@@ -70,9 +70,9 @@ public class CatDestinationRepositoryImpl implements CatRepository {
 
     try {
 
-      HttpResponse httpResponse = destinationCreator.executeHttpGet(ENDPOINT_CATS);
+      HttpResponse httpResponse = destinationCreator.executeHttpGet(PATH_CATS);
       String responseString = EntityUtils.toString(httpResponse.getEntity(), UTF_8);
-      return convertStringToListOfCatResponse(responseString);
+      return convertJsonStringToListOfObjects(responseString, CatResponse[].class);
 
     } catch (final JsonProcessingException e) {
       log.error("CatRepository. Can't convert to CatResponse");
@@ -88,7 +88,7 @@ public class CatDestinationRepositoryImpl implements CatRepository {
   public void deleteById(final long id) {
     log.info("CatRepository. Delete cat by id: {}", id);
 
-    String url = ENDPOINT_CATS + "/" + id;
+    String url = PATH_CATS + "/" + id;
 
     try {
 
