@@ -2,3 +2,10 @@ spring:
   profiles:
     active: destination
     include: destination
+
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          FilterChainProxy: Debug

@@ -1,5 +1,7 @@
 package com.leverx.mediator.controller;
 
+import static com.leverx.mediator.constant.EndpointConstant.ENDPOINT_ALL;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /** @author Andrei Yahorau */
 @RestController
-@RequestMapping("/api/v1/all")
+@RequestMapping(ENDPOINT_ALL)
 @Slf4j
 public class MultiController {
 
