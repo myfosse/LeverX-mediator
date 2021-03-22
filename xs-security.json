@@ -1,0 +1,64 @@
+{
+  "xsappname": "mediator-ce3600fftrial",
+  "tenant-mode": "shared",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.Read",
+      "description": "read"
+    },
+    {
+      "name": "$XSAPPNAME.Update",
+      "description": "update"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "Viewer",
+      "description": "View Data",
+      "scope-references": [
+        "$XSAPPNAME.Read",
+        "uaa.user"
+      ]
+    },
+    {
+      "name": "Writer",
+      "description": "Modify Sensitive Data",
+      "scope-references": [
+        "$XSAPPNAME.Update",
+        "uaa.user"
+      ]
+    },
+    {
+      "name": "Administrator",
+      "description": "View and modify Sensitive Data",
+      "scope-references": [
+        "$XSAPPNAME.Read",
+        "$XSAPPNAME.Update",
+        "uaa.user"
+      ]
+    }
+  ],
+  "role-collections": [
+    {
+      "name": "Viewer",
+      "description": "Viewer",
+      "role-template-references": [
+        "$XSAPPNAME.Viewer"
+      ]
+    },
+    {
+      "name": "Administrator",
+      "description": "Administrator",
+      "role-template-references": [
+        "$XSAPPNAME.Administrator"
+      ]
+    },
+    {
+      "name": "Writer",
+      "description": "Writer",
+      "role-template-references": [
+        "$XSAPPNAME.Writer"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "welcomeFile": "/api/v1/all",
+  "routes": [{
+    "source": "/",
+    "target": "/",
+    "destination": "proxy-destination"
+  }]
+}

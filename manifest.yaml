@@ -1,4 +1,5 @@
 applications:
+
   - name: mediator
     instances: 1
     memory: 1G
@@ -7,5 +8,20 @@ applications:
     buildpack: https://github.com/cloudfoundry/java-buildpack.git#v4.35
     env:
       JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+}}'
+      JBP_CONFIG_DEBUG: '{enabled: true}'
     services:
       - proxy-destination
+      - proxy-xsuaa
+
+  - name: approuter
+    routes:
+      - route: approuter-ce3600fftrial.cfapps.eu10.hana.ondemand.com
+    path: approuter
+    memory: 128M
+    buildpacks:
+      - nodejs_buildpack
+    env:
+      TENANT_HOST_PATTERN: 'approuter-(.*).cfapps.eu10.hana.ondemand.com'
+      destinations: '[{"name":"proxy-destination", "url" :"https://mediator.cfapps.eu10.hana.ondemand.com/", "forwardAuthToken": true}]'
+    services:
+      - proxy-xsuaa
